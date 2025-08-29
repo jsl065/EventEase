@@ -1,0 +1,28 @@
+@page "/events/{id:int}"
+@using EventEase.Models;
+@using EventEase.Services;
+@inject EventService EventService
+
+<h1>@Event.Name</h1>
+
+<p>Location: @Event.Location</p>
+<p>Date: @Event.Date</p>
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Event? Event;
+
+    protected override void OnInitialized()
+    {
+
+        GetEvent();
+    }
+
+    private async Task GetEvent()
+    {
+        Event = (await EventService.GetEvents()).FirstOrDefault(e => e.Id == Id);
+    }
+}

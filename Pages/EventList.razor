@@ -1,0 +1,23 @@
+@page "/events"
+@using EventEase.Models;
+@inject EventEase.Services.EventService EventService
+
+
+@foreach(var eventItem in events) {
+    <EventCard Event="eventItem" />
+}
+
+@code {
+    private List<Event> events = [];
+
+    protected override void OnInitialized()
+    {
+        GetEvents();
+    }
+
+    private async Task GetEvents()
+    {
+        events = await EventService.GetEvents();
+        StateHasChanged();
+    }
+}
